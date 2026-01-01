@@ -8,7 +8,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./data/init.sql:/docker-entrypoint-initdb.d/init.sql
 
   ims_web:
     build: 
@@ -16,8 +16,9 @@ services:
       dockerfile: Dockerfile
     container_name: ims_blazor_container
     ports:
-      - "5000:80"
+      - "5000:8080"
     depends_on:
       - ims_db
     environment:
       - ConnectionStrings__DefaultConnection=Server=ims_db;Database=ims_finance;Uid=root;Pwd=password123;
+      - ASPNETCORE_ENVIRONMENT=Development

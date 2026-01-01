@@ -1,9 +1,63 @@
 ﻿@page "/"
+@using System.Data
+@using IMSApp.Data
+@inject FinanceService FService
 
-<PageTitle>Index</PageTitle>
+<h3>Kalkulator Angsuran</h3>
+<div class="row g-2 mb-4">
+    <div class="col-3">
+        <label class="form-label fw-bold">Harga Mobil (OTR)</label>
+        <input type="number" @bind="otr" class="form-control" />
+        <small class="text-muted">Masukkan total harga kendaraan.</small>
+    </div>
 
-<h1>Hello, world!</h1>
+    <div class="col-2">
+        <label class="form-label fw-bold">Uang Muka (DP %)</label>
+        <input type="number" @bind="dp" class="form-control" />
+        <small class="text-muted">Persentase DP</small>
+    </div>
 
-Welcome to your new app.
+    <div class="col-2">
+        <label class="form-label fw-bold">Jangka Waktu</label>
+        <input type="number" @bind="tenor" class="form-control" />
+        <small class="text-muted">Tenor dalam bulan.</small>
+    </div>
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+    <div class="col-2 d-flex align-items-end">
+        <button @onclick="Hitung" class="btn btn-primary w-100">Hitung Angsuran</button>
+    </div>
+</div>
+
+@if (hasil > 0)
+{
+    <div class="alert alert-info mt-3">
+        <strong>Hasil Perhitungan:</strong><br />
+        Angsuran per Bulan: Rp @hasil.ToString("N0")
+    </div>
+}
+
+@code {
+    decimal otr, dp, hasil;
+    int tenor;
+    void Hitung()
+    {
+        if (tenor <= 0) return;
+
+        decimal pokokUtang = otr - (otr * dp / 100);
+
+        decimal bunga;
+        if (tenor <= 12)
+        {
+            bunga = 0.12m;
+        }
+        else if (tenor > 12 && tenor <= 24)
+        {
+            bunga = 0.14m;
+        }
+        else
+        {
+            bunga = 0.165m;
+        }
+        hasil = (pokokUtang + (pokokUtang * bunga)) / tenor;
+    }
+}
