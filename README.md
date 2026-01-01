@@ -1,4 +1,7 @@
 # IMS Finance
+<img width="785" height="353" alt="image" src="https://github.com/user-attachments/assets/14c04d0c-f579-4254-b215-5033bf714c1b" />
+<img width="791" height="256" alt="image" src="https://github.com/user-attachments/assets/382e6d11-ae43-46a8-9013-b17bb661d3fc" />
+
 
 Aplikasi manajemen keuangan berbasis web menggunakan Blazor Server dan MySQL.
 
